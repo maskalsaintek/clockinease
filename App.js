@@ -1,15 +1,18 @@
-import { View, Text, Dimensions, Image, StyleSheet } from 'react-native'
-import React from 'react'
-
-const { width, height } = Dimensions.get('window');
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 export default function App() {
+  useEffect(() => {
+    console.log('miaww');
+    SplashScreen.hide();
+  }, []);
+  
   return (
     <View style={styles.container}>
-      <Image source={require('./src/image/screen_bg.png')} style={{ width: width, height: height, position: 'absolute'}} />
-      <Image source={require('./src/image/qr_logo.png')} style={{ width: 96, height: 96 }} />
+      {/* Konten aplikasi Anda */}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -17,5 +20,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
