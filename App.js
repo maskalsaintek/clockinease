@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import Navigation from './src/routes';
 
 export default function App() {
   useEffect(() => {
@@ -8,11 +9,7 @@ export default function App() {
     SplashScreen.hide();
   }, []);
   
-  return (
-    <View style={styles.container}>
-      {/* Konten aplikasi Anda */}
-    </View>
-  );
+  return <Navigation/>;
 }
 
 const styles = StyleSheet.create({
