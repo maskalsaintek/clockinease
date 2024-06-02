@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TextInput, Text} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from '../styles/AppTextInputStyle';
 
@@ -11,6 +11,7 @@ const AppTextInput = ({
   keyboardType,
   secureTextEntry,
   onChangeText,
+  onRightIconPress,
 }) => {
   return (
     <View>
@@ -24,7 +25,11 @@ const AppTextInput = ({
           style={styles.textInput}
           onChangeText={onChangeText}
         />
-        {rightIconName && <Icon name={rightIconName} size={20} color="black" />}
+        {rightIconName && (
+          <TouchableOpacity onPress={onRightIconPress}>
+            <Icon name={rightIconName} size={20} color="black" />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
