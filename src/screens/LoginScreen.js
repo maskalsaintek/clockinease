@@ -97,7 +97,12 @@ export default function LoginScreen() {
         <TouchableOpacity
           style={LoginStyle.RegisterButton}
           activeOpacity={0.2}
-          onPress={() => {}}>
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{name: 'RegisterScreen'}],
+            });
+          }}>
           <Text style={LoginStyle.RegisterButtonLabel}>Daftar</Text>
         </TouchableOpacity>
         <Dialog.Container visible={dialogVisible} statusBarTranslucent>

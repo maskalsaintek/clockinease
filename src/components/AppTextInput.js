@@ -12,10 +12,15 @@ const AppTextInput = ({
   secureTextEntry,
   onChangeText,
   onRightIconPress,
+  marginTop,
 }) => {
   return (
     <View>
-      {label && <Text style={styles.label}>{label}</Text>}
+      {label && (
+        <Text style={[styles.label, {marginTop: marginTop ?? 14}]}>
+          {label}
+        </Text>
+      )}
       <View style={styles.container}>
         {leftIconName && <Icon name={leftIconName} size={20} color="black" />}
         <TextInput
@@ -24,6 +29,7 @@ const AppTextInput = ({
           secureTextEntry={secureTextEntry}
           style={styles.textInput}
           onChangeText={onChangeText}
+          placeholderTextColor="#818181"
         />
         {rightIconName && (
           <TouchableOpacity onPress={onRightIconPress}>
