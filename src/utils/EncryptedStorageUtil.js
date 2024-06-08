@@ -24,4 +24,14 @@ async function loadData(key) {
   }
 }
 
-export {saveData, loadData};
+async function deleteData(key) {
+  try {
+    await EncryptedStorage.removeItem(key);
+    console.log('Data removed successfully!');
+  } catch (error) {
+    console.error('Failed to remove data:', error);
+    throw error;
+  }
+}
+
+export {saveData, loadData, deleteData};

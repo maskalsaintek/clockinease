@@ -6,7 +6,7 @@ import AppTextInput from '../components/AppTextInput';
 import {useHudContext} from 'react-native-hud-view';
 import Dialog from 'react-native-dialog';
 import LoginApi from '../api/LoginApi';
-import {saveData, loadData} from '../utils/EncryptedStorageUtil';
+import {saveData} from '../utils/EncryptedStorageUtil';
 import {useNavigation} from '@react-navigation/native';
 
 export default function LoginScreen() {

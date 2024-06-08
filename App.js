@@ -7,7 +7,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 export default function App() {
   useEffect(() => {
-    console.log('miaww');
     SplashScreen.hide();
   }, []);
 

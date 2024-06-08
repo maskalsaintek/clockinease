@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 36,
   },
   monthContainer: {
-    marginHorizontal: 14,
     height: 20,
     width: 100,
     backgroundColor: 'white',
@@ -120,7 +119,8 @@ const styles = StyleSheet.create({
   },
   presenceListContainer: {
     flex: 1,
-    marginVertical: 15,
+    marginTop: 15,
+    marginBottom: 100,
     paddingHorizontal: 30,
   },
   qrButton: {

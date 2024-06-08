@@ -1,25 +1,24 @@
-class User {
-  constructor(id, uuid, email, name, position, deviceModel, createdAt) {
+// User.js
+export class User {
+  constructor({id, name, email, deviceModel, position, uuid, createdAt}) {
     this.id = id;
-    this.uuid = uuid;
-    this.email = email;
     this.name = name;
-    this.position = position;
+    this.email = email;
     this.deviceModel = deviceModel;
+    this.position = position;
+    this.uuid = uuid;
     this.createdAt = createdAt;
   }
 
-  static fromJson(json) {
-    return new User(
-      json.id,
-      json.uuid,
-      json.email,
-      json.name,
-      json.position,
-      json.deviceModel,
-      json.createdAt,
-    );
+  static fromJSON(json) {
+    return new User({
+      id: json.id,
+      name: json.name,
+      email: json.email,
+      deviceModel: json.device_model,
+      position: json.position,
+      uuid: json.uuid,
+      createdAt: json.created_at,
+    });
   }
 }
-
-export default User;

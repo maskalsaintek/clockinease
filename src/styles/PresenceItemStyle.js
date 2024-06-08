@@ -14,6 +14,8 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.3,
     shadowRadius: 1.0,
+    minWidth: (Dimensions.get('window').width - 140) / 4,
+    maxWidth: (Dimensions.get('window').width - 140) / 4,
   },
   numberContainer: {
     flexDirection: 'row',

@@ -4,19 +4,25 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ModalPickerMonthStyle from '../styles/MonthPickerModalStyle';
 
 const months = [
-  {id: '1', name: 'January'},
-  {id: '2', name: 'February'},
-  {id: '3', name: 'March'},
-  {id: '4', name: 'April'},
-  {id: '5', name: 'May'},
-  {id: '6', name: 'June'},
+  {id: 0, name: 'Januari'},
+  {id: 1, name: 'Februari'},
+  {id: 2, name: 'Maret'},
+  {id: 3, name: 'April'},
+  {id: 4, name: 'Mei'},
+  {id: 5, name: 'Juni'},
+  {id: 7, name: 'Juli'},
+  {id: 8, name: 'Agustus'},
+  {id: 9, name: 'September'},
+  {id: 10, name: 'Oktober'},
+  {id: 11, name: 'November'},
+  {id: 12, name: 'Desember'},
 ];
 
-const MonthPickerModal = ({visible, onClose}) => {
-  const renderItem = ({item}) => (
+const MonthPickerModal = ({visible, onClose, currentMonthNumber = 12}) => {
+  const renderItem = ({index, item}) => (
     <TouchableOpacity
       style={ModalPickerMonthStyle.item}
-      onPress={() => onClose(item.name)}>
+      onPress={() => onClose(index)}>
       <Text style={ModalPickerMonthStyle.itemText}>{item.name}</Text>
     </TouchableOpacity>
   );
@@ -33,7 +39,7 @@ const MonthPickerModal = ({visible, onClose}) => {
             </TouchableOpacity>
           </View>
           <FlatList
-            data={months}
+            data={months.slice(0, currentMonthNumber)}
             renderItem={renderItem}
             keyExtractor={item => item.id}
             style={ModalPickerMonthStyle.list}
