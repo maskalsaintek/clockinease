@@ -208,7 +208,7 @@ export default function RegisterScreen() {
             label="Nomor Telepon"
             leftIconName="phone"
             placeholder="08123456789"
-            keyboardType="phone"
+            keyboardType="phone-pad"
             marginTop={26}
             onChangeText={value => {
               setPhoneNumber(value);
@@ -218,7 +218,7 @@ export default function RegisterScreen() {
             label="Email"
             leftIconName="email"
             placeholder="contoh@email.com"
-            keyboardType="email"
+            keyboardType="email-address"
             marginTop={26}
             onChangeText={value => {
               setEmail(value);

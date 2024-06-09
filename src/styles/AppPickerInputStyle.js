@@ -5,6 +5,7 @@ export default StyleSheet.create({
     fontSize: 14,
     marginTop: 14,
     fontWeight: '500',
+    color: 'black',
   },
   container: {
     flexDirection: 'row',
@@ -37,6 +38,10 @@ export default StyleSheet.create({
       marginHorizontal: 9,
       fontSize: 14,
       justifyContent: 'center',
+      paddingVertical: 0,
+    },
+    chevronDown: {
+      display: 'none',
     },
   },
 });

@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
+    color: 'black',
   },
   loginButton: {
     backgroundColor: '#D4CB00',

@@ -30,6 +30,7 @@ const AppTextInput = ({
           style={styles.textInput}
           onChangeText={onChangeText}
           placeholderTextColor="#818181"
+          autoCapitalize="none"
         />
         {rightIconName && (
           <TouchableOpacity onPress={onRightIconPress}>

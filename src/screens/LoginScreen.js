@@ -67,7 +67,7 @@ export default function LoginScreen() {
           label="Email"
           leftIconName="email"
           placeholder="contoh@email.com"
-          keyboardType="email"
+          keyboardType="email-address"
           onChangeText={value => {
             setEmail(value);
           }}

@@ -5,6 +5,7 @@ export default StyleSheet.create({
     fontSize: 14,
     marginTop: 14,
     fontWeight: '500',
+    color: 'black',
   },
   container: {
     flexDirection: 'row',
@@ -22,5 +23,6 @@ export default StyleSheet.create({
     fontSize: 14,
     marginHorizontal: 9,
     color: 'black',
+    paddingVertical: 0,
   },
 });

@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     flex: 1,
+    color: 'black',
   },
   list: {
     marginVertical: 22,

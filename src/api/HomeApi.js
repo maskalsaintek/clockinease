@@ -32,6 +32,77 @@ class HomeApi {
       }
     }
   }
+
+  static async presenceIn(status = 'Hadir', latitude, longitude) {
+    const endpoint = '/presence-in';
+    const loginData = await loadData('user'); // Assuming login data contains the token
+    const headers = {
+      Authorization: 'Bearer ' + loginData.token,
+      'Content-Type': 'application/json',
+    };
+
+    const body = {
+      status,
+      latitude,
+      longitude,
+      desc: '',
+    };
+
+    try {
+      const response = await ApiUtil.callApi(
+        'POST',
+        endpoint,
+        body,
+        {},
+        headers,
+        false,
+      );
+      console.log('Presence in recorded successfully:', response);
+      return response;
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error('An unexpected error occurred');
+      }
+    }
+  }
+
+  static async presenceOut() {
+    const endpoint = '/presence-out';
+    const loginData = await loadData('user'); // Assuming login data contains the token
+    const headers = {
+      Authorization: 'Bearer ' + loginData.token,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      const response = await ApiUtil.callApi(
+        'POST',
+        endpoint,
+        null,
+        {},
+        headers,
+        false,
+      );
+      console.log('Presence out recorded successfully:', response);
+      return response;
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        throw new Error(error.response.data.message);
+      } else {
+        throw new Error('An unexpected error occurred');
+      }
+    }
+  }
 }
 
 export default HomeApi;

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import GeneralStyle from '../styles/GeneralStyle';
 import HomeStyle from '../styles/HomeStyle';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,7 +17,8 @@ import {useHudContext} from 'react-native-hud-view';
 import Dialog from 'react-native-dialog';
 import HomeApi from '../api/HomeApi';
 import {loadData, deleteData} from '../utils/EncryptedStorageUtil';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import GetLocation from 'react-native-get-location';
 
 const numColumns = 4; // Number of columns in the grid
 const months = [
@@ -35,7 +36,7 @@ const months = [
   'Desember',
 ];
 
-export default function HomeScreen() {
+export default function HomeScreen({route}) {
   useEffect(() => {
     fetchUserData();
     fetchPresenceData();
@@ -49,9 +50,65 @@ export default function HomeScreen() {
   const {show, hide} = useHudContext();
   const [dialogMessage, setDialogMessage] = useState('');
   const [dialogVisible, setDialogVisible] = useState(false);
+  const [dialogLogout, setDialogLogout] = useState(false);
+  const [isDialogCancelButtonVisible, setIsDialogCancelButtonVisible] =
+    useState(false);
   const [userData, setUserData] = useState(null);
   const [selectedMonth, setSelectedMonth] = useState(0);
   const navigation = useNavigation();
+
+  useFocusEffect(
+    useCallback(() => {
+      console.log('callback triggfered:', route.params?.response);
+      if (route.params?.response) {
+        if (route.params.response.data == null) {
+          setDialogMessage('Kode QR Tidak Valid!');
+          setDialogVisible(true);
+        }
+
+        show({name: 'circle-slice-1'}, {rotate: true});
+        if (route.params.response.data == 'presensi-masuk') {
+          try {
+            GetLocation.getCurrentPosition({
+              enableHighAccuracy: true,
+              timeout: 60000,
+            })
+              .then(location => {
+                console.log(location);
+                const response = HomeApi.presenceIn(
+                  'Hadir',
+                  location.latitude,
+                  location.longitude,
+                );
+                setDialogMessage(`Berhasil Masuk`);
+                setDialogVisible(true);
+              })
+              .catch(error => {
+                const {code, message} = error;
+                setDialogMessage(`Error recording presence in: ${message}`);
+                setDialogVisible(true);
+              });
+          } catch (error) {
+            setDialogMessage(`Gagal Masuk!`);
+            setDialogVisible(true);
+          } finally {
+            hide();
+          }
+        } else if (route.params.response.data == 'presensi-pulang') {
+          try {
+            const response = HomeApi.presenceOut();
+            setDialogMessage(`Berhasil Pulang!`);
+            setDialogVisible(true);
+          } catch (error) {
+            setDialogMessage(`Gagal Pulang!`);
+            setDialogVisible(true);
+          } finally {
+            hide();
+          }
+        }
+      }
+    }, [route.params]),
+  );
 
   const isValidTime = timeString => {
     const regex = /^(?:[01]\d|2[0-3]):(?:[0-5]\d):(?:[0-5]\d)$/;
@@ -60,6 +117,9 @@ export default function HomeScreen() {
 
   const handleModalClose = selectedMonthValue => {
     setModalVisible(false);
+    if (!selectedMonthValue) {
+      return;
+    }
     setSelectedMonth(selectedMonthValue);
   };
 
@@ -124,11 +184,17 @@ export default function HomeScreen() {
         source={require('../image/screen_bg.png')}
         style={GeneralStyle.screenBackgroundImage}
       />
-      <SafeAreaView style={HomeStyle.safeArea}>
+      <SafeAreaView
+        style={{
+          ...HomeStyle.safeArea,
+          padding: Platform.OS === 'ios' ? 20 : 0,
+        }}>
         <View style={HomeStyle.header}>
           <TouchableOpacity
             onPress={() => {
               setDialogMessage('Anda Yakin Ingin Keluar?');
+              setIsDialogCancelButtonVisible(true);
+              setDialogLogout(true);
               setDialogVisible(true);
             }}>
             <Icon
@@ -213,7 +279,10 @@ export default function HomeScreen() {
           onClose={handleModalClose}
           currentMonthNumber={currentMonthNumber + 1}
         />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('QrCodeScannerScreen');
+          }}>
           <Image
             source={require('../image/qr_button.png')}
             style={HomeStyle.qrButton}
@@ -227,21 +296,29 @@ export default function HomeScreen() {
           label="Ok"
           onPress={async () => {
             setDialogVisible(false);
-            await deleteData('user');
-            setTimeout(() => {
-              navigation.reset({
-                index: 0,
-                routes: [{name: 'LoginScreen'}],
-              });
-            }, 500);
+            setIsDialogCancelButtonVisible(false);
+            setDialogLogout(false);
+            if (dialogLogout) {
+              await deleteData('user');
+              setTimeout(() => {
+                navigation.reset({
+                  index: 0,
+                  routes: [{name: 'LoginScreen'}],
+                });
+              }, 500);
+            }
           }}
         />
-        <Dialog.Button
-          label="Cancel"
-          onPress={() => {
-            setDialogVisible(false);
-          }}
-        />
+        {isDialogCancelButtonVisible && (
+          <Dialog.Button
+            label="Cancel"
+            onPress={() => {
+              setDialogVisible(false);
+              setIsDialogCancelButtonVisible(false);
+              setDialogLogout(false);
+            }}
+          />
+        )}
       </Dialog.Container>
     </View>
   );

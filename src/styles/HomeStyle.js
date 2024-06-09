@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   safeArea: {
     width: '100%',
     height: '100%',
-    padding: 20,
     alignSelf: 'flex-start',
   },
 
@@ -23,6 +22,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     alignSelf: 'center',
     fontWeight: '700',
+    color: 'black',
   },
 
   welcomeLabel: {
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '500',
     fontStyle: 'italic',
+    color: 'black',
   },
 
   profile: {
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
   profileName: {
     fontSize: 15,
     fontWeight: '700',
+    color: 'black',
   },
 
   profileEmail: {
@@ -81,6 +83,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     alignSelf: 'center',
+    color: 'black',
   },
   chevronButton: {
     width: 30,

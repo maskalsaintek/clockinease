@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 30,
+    color: 'black',
   },
   registerButton: {
     backgroundColor: '#D4CB00',
